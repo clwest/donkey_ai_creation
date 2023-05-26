@@ -37,17 +37,30 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Third party apps
+    "rest_framework",
+    "corsheaders",
+    
+    # local apps
+    "users.apps.UsersConfig",
+    "posts.apps.PostsConfig",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware", 
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_WHITELIST = (
+"http://localhost:3000",
+"http://localhost:8000",
+)
 
 ROOT_URLCONF = 'donkey_project.urls'
 
@@ -70,7 +83,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'donkey_project.wsgi.application'
 
 
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny"
+    ]}
+
 # Database
+
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
@@ -80,6 +99,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -121,3 +141,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# django_project/settings.py
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
