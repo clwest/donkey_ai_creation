@@ -1,0 +1,4 @@
+.venv
+.env
+.history
+db.sqlite3
