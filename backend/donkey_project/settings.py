@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     # local apps
     "users.apps.UsersConfig",
     "posts.apps.PostsConfig",
+    "cryptonews.apps.CryptonewsConfig",
+    "coingecko.apps.CoingeckoConfig",
 ]
 
 MIDDLEWARE = [
