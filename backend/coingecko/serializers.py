@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Coin, HodlCoin
+from .models import Coin, HodlCoin, Category
 
 class CoinSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,4 +9,9 @@ class CoinSerializer(serializers.ModelSerializer):
 class HodlCoinSerializer(serializers.ModelSerializer):
     class Meta:
         model = HodlCoin
+        fields = "__all__"
+        
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
         fields = "__all__"
