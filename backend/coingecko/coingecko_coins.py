@@ -1,38 +1,58 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
 import os
 import requests
 
-class CoinDataView(APIView):
+from dotenv import load_dotenv
 
-    COINGECKO_API_KEY = os.getenv('COINGECKO')
+load_dotenv()
 
-    def get(self, request, *args, **kwargs):
-        coin_list = self.get_coin_list()
-        return Response(coin_list)
 
-    def get_coin_list(self, page=1):
-        url = "https://pro-api.coingecko.com/api/v3/coins/markets"
-        headers = {
+
+COINGECKO_API_KEY = os.getenv('COINGECKO')
+
+
+def get_coin_list():
+    url = f"https://pro-api.coingecko.com/api/v3/coins/markets"
+    headers = {
             'Accepts': 'application/json', 
-            'X-CG-Pro-API-Key': self.COINGECKO_API_KEY
+            'X-CG-Pro-API-Key': COINGECKO_API_KEY
         }
-        params = {
+    params = {
             'vs_currency': 'usd',
-            'order': 'market_cap_desc',
-            'per_page': 100,
-            'page': page,
-            'sparkline': False   
         }
-        response = requests.get(url, headers=headers, params=params)
-        coin_data = response.json()
-        crypto_list = [self.extract_coin_data(coin) for coin in coin_data]
-        return crypto_list
 
-    def extract_coin_data(self, coin):
-        return {
+    response = requests.get(url, headers=headers, params=params)
+    data = response.json()
+    if not data:
+        return
+    coin_list = []
+    for coin in data:
+        coin_dict = {
             'id': coin['id'],
             'symbol': coin['symbol'],
             'name': coin['name'],
-            # Extract the rest of the fields you need...
+            'image': coin['image'],
+            'current_price': coin['current_price'],
+            'market_cap': coin['market_cap'],
+            'market_cap_rank': coin['market_cap_rank'],
+            'fully_diluted_valuation': coin['fully_diluted_valuation'],
+            'total_volume': coin['total_volume'],
+            'high_24h': coin['high_24h'],
+            'low_24h': coin['low_24h'],
+            'price_change_24h': coin['price_change_24h'],
+            'price_change_percentage_24h': coin['price_change_percentage_24h'],
+            'market_cap_change_24h': coin['market_cap_change_24h'],
+            'market_cap_change_percentage_24h': coin['market_cap_change_percentage_24h'],
+            'circulating_supply': coin['circulating_supply'],
+            'total_supply': coin['total_supply'],
+            'max_supply': coin['max_supply'],
+            'ath': coin['ath'],
+            'ath_change_percentage': coin['ath_change_percentage'],
+            'ath_date': coin['ath_date'],
+            'atl': coin['atl'],
+            'atl_change_percentage': coin['atl_change_percentage'],
+            'atl_date': coin['atl_date'],
+            'roi': coin['roi'],
+            'last_updated': coin['last_updated'],    
         }
+        coin_list.append(coin_dict)
+    return coin_list

@@ -69,7 +69,7 @@ def get_crypto_news(source_name=None):
 
 
 def get_trending_headlines(ticker=None):
-    url = "https://cryptonews-api.com/api/v1/trending-headlines"
+    url = f"https://cryptonews-api.com/api/v1/trending-headlines"
     params = {
         'page': 1,
         'token': crypto_news
@@ -96,7 +96,7 @@ def get_trending_headlines(ticker=None):
 
 
 def get_event_articles(tickers=None):
-    event_url = "https://cryptonews-api.com/api/v1/events"
+    event_url = f"https://cryptonews-api.com/api/v1/events"
     event_params = {
         'page': 1,
         'token': crypto_news
@@ -104,7 +104,7 @@ def get_event_articles(tickers=None):
     event_response = requests.get(event_url, params=event_params)
     event_data = event_response.json().get('data', [])
 
-    article_url = "https://cryptonews-api.com/api/v1/events"
+    article_url = f"https://cryptonews-api.com/api/v1/events"
     article_params = {
         'page': 1,
         'token': crypto_news,

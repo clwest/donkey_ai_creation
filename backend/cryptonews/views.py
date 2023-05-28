@@ -11,6 +11,7 @@ class CryptoNewsViewSet(viewsets.ViewSet):
         data = get_crypto_news()
         serializer = CryptoNewsSerializer(data=data, many=True)
         serializer.is_valid()
+        serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class CryptoNewsSourceViewSet(viewsets.ViewSet):
